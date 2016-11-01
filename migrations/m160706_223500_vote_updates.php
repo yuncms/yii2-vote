@@ -1,6 +1,6 @@
 <?php
 
-use hauntd\vote\migrations\Migration;
+use yuncms\vote\migrations\Migration;
 
 /**
  * @author Alexander Kononenko <contact@hauntd.me>

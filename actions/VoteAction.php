@@ -1,21 +1,21 @@
 <?php
 
-namespace hauntd\vote\actions;
+namespace yuncms\vote\actions;
 
 use Yii;
-use hauntd\vote\Module;
-use hauntd\vote\events\VoteActionEvent;
-use hauntd\vote\models\Vote;
-use hauntd\vote\models\VoteAggregate;
-use hauntd\vote\models\VoteForm;
-use hauntd\vote\traits\ModuleTrait;
+use yuncms\vote\Module;
+use yuncms\vote\events\VoteActionEvent;
+use yuncms\vote\models\Vote;
+use yuncms\vote\models\VoteAggregate;
+use yuncms\vote\models\VoteForm;
+use yuncms\vote\traits\ModuleTrait;
 use yii\base\Action;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\Response;
 
 /**
  * Class VoteAction
- * @package hauntd\vote\actions
+ * @package yuncms\vote\actions
  */
 class VoteAction extends Action
 {

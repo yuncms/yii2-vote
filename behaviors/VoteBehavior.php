@@ -1,15 +1,15 @@
 <?php
 
-namespace hauntd\vote\behaviors;
+namespace yuncms\vote\behaviors;
 
-use hauntd\vote\models\VoteAggregate;
-use hauntd\vote\traits\ModuleTrait;
+use yuncms\vote\models\VoteAggregate;
+use yuncms\vote\traits\ModuleTrait;
 use yii\base\Behavior;
 use yii\helpers\ArrayHelper;
 
 /**
  * Class VoteBehavior
- * @package hauntd\vote\behaviors
+ * @package yuncms\vote\behaviors
  */
 class VoteBehavior extends Behavior
 {

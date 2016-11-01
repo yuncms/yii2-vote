@@ -1,6 +1,6 @@
 <?php
 
-namespace hauntd\vote\migrations;
+namespace yuncms\vote\migrations;
 
 use Yii;
 

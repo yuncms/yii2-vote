@@ -1,6 +1,6 @@
 <?php
 
-namespace hauntd\vote;
+namespace yuncms\vote;
 
 use Yii;
 use yii\base\InvalidConfigException;
@@ -18,11 +18,6 @@ class Module extends \yii\base\Module
      * @var bool Apply default styles by default
      */
     public $registerAsset = true;
-
-    /**
-     * @var string
-     */
-    public $controllerNamespace = 'hauntd\vote\controllers';
 
     /**
      * @var array Entities that will be used by vote widgets.

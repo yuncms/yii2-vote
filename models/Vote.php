@@ -1,8 +1,9 @@
 <?php
 
-namespace hauntd\vote\models;
+namespace yuncms\vote\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -18,9 +19,9 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $value
  * @property integer $created_at
  *
- * @property \hauntd\vote\models\VoteAggregate $aggregate
+ * @property VoteAggregate $aggregate
  */
-class Vote extends \yii\db\ActiveRecord
+class Vote extends ActiveRecord
 {
     const VOTE_POSITIVE = 1;
     const VOTE_NEGATIVE = 0;
@@ -30,7 +31,7 @@ class Vote extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'vote';
+        return '{{%vote}}';
     }
 
     /**
@@ -125,7 +126,7 @@ class Vote extends \yii\db\ActiveRecord
         $positive = static::find()->where(['entity' => $entity, 'target_id' => $targetId, 'value' => self::VOTE_POSITIVE])->count();
         $negative = static::find()->where(['entity' => $entity, 'target_id' => $targetId, 'value' => self::VOTE_NEGATIVE])->count();
         if ($positive + $negative !== 0) {
-            $rating = (($positive + 1.9208) / ($positive + $negative) - 1.96 * SQRT(($positive * $negative)
+            $rating = (($positive + 1.9208) / ($positive + $negative) - 1.96 * sqrt(($positive * $negative)
                         / ($positive + $negative) + 0.9604) / ($positive + $negative)) / (1 + 3.8416 / ($positive + $negative));
         } else {
             $rating = 0;

@@ -1,14 +1,14 @@
 <?php
 
-namespace hauntd\vote\controllers;
+namespace yuncms\vote\controllers;
 
-use hauntd\vote\actions\VoteAction;
+use yuncms\vote\actions\VoteAction;
 use Yii;
 use yii\web\Controller;
 
 /**
  * @author Alexander Kononenko <contact@hauntd.me>
- * @package hauntd\vote\controllers
+ * @package yuncms\vote\controllers
  */
 class DefaultController extends Controller
 {

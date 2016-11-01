@@ -1,13 +1,13 @@
 <?php
 
-namespace hauntd\vote\events;
+namespace yuncms\vote\events;
 
-use hauntd\vote\models\VoteForm;
+use yuncms\vote\models\VoteForm;
 use yii\base\Event;
 
 /**
  * Class VoteActionEvent
- * @package hauntd\vote\events
+ * @package yuncms\vote\events
  */
 class VoteActionEvent extends Event
 {

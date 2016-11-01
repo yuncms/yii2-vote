@@ -1,5 +1,5 @@
 {
-    "name": "hauntd/yii2-vote",
+    "name": "yuncms/yii2-vote",
     "description": "Votes, likes, favorites.",
     "type": "yii2-extension",
     "keywords": [
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "hauntd\\vote\\": ""
+            "yuncms\\vote\\": ""
         }
     }
 }

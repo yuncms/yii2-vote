@@ -1,8 +1,8 @@
-# Action events
+# Action 事件
 
 If you need to add or extend functionality (before or after vote action) you can attach action events.
 
-1. Modify module config by adding your vote controller (`controllerMap`):
+1. 通过添加您的投票控制器来修改模块配置 (`controllerMap`):
 
 ```php
  'modules' => [
@@ -25,7 +25,7 @@ If you need to add or extend functionality (before or after vote action) you can
     ],
 ```
 
-2. Add action `hauntd\vote\actions\VoteAction` to your controller:
+2. 添加 Action `hauntd\vote\actions\VoteAction` 到你的控制器:
 
 ```php
 <?php

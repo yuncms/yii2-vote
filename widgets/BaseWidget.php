@@ -1,12 +1,12 @@
 <?php
 
-namespace hauntd\vote\widgets;
+namespace yuncms\vote\widgets;
 
 use Yii;
-use hauntd\vote\assets\VoteAsset;
-use hauntd\vote\behaviors\VoteBehavior;
-use hauntd\vote\models\VoteAggregate;
-use hauntd\vote\traits\ModuleTrait;
+use yuncms\vote\assets\VoteAsset;
+use yuncms\vote\behaviors\VoteBehavior;
+use yuncms\vote\models\VoteAggregate;
+use yuncms\vote\traits\ModuleTrait;
 use yii\base\InvalidParamException;
 use yii\base\Widget;
 use yii\web\JsExpression;

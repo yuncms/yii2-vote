@@ -1,18 +1,18 @@
 <?php
 
-namespace hauntd\vote\behaviors;
+namespace yuncms\vote\behaviors;
 
-use hauntd\vote\models\Vote;
-use hauntd\vote\models\VoteAggregate;
-use hauntd\vote\traits\ModuleTrait;
+use yuncms\vote\models\Vote;
+use yuncms\vote\models\VoteAggregate;
+use yuncms\vote\traits\ModuleTrait;
 use Yii;
 use yii\base\Behavior;
 use yii\db\Expression;
 
 /**
  * Class VoteQueryBehavior
- * @package hauntd\vote\behaviors
- * @property $own;er \yii\db\ActiveQuery
+ * @package yuncms\vote\behaviors
+ * @property $owner \yii\db\ActiveQuery
  */
 class VoteQueryBehavior extends Behavior
 {

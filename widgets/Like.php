@@ -1,13 +1,13 @@
 <?php
 
-namespace hauntd\vote\widgets;
+namespace yuncms\vote\widgets;
 
 use Yii;
 use yii\bootstrap\Html;
 
 /**
  * @author Alexander Kononenko <contact@hauntd.me>
- * @package hauntd\vote\widgets
+ * @package yuncms\vote\widgets
  */
 class Like extends VoteToggle
 {

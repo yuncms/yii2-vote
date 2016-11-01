@@ -1,6 +1,6 @@
 <?php
 
-use hauntd\vote\models\Vote;
+use yuncms\vote\models\Vote;
 
 /* @var $jsCodeKey string */
 /* @var $entity string */

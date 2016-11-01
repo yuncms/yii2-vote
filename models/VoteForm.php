@@ -1,16 +1,16 @@
 <?php
 
-namespace hauntd\vote\models;
+namespace yuncms\vote\models;
 
 use Yii;
-use hauntd\vote\Module;
-use hauntd\vote\traits\ModuleTrait;
+use yuncms\vote\Module;
+use yuncms\vote\traits\ModuleTrait;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 /**
  * @author Alexander Kononenko <contact@hauntd.me>
- * @package hauntd\vote\models
+ * @package yuncms\vote\models
  */
 class VoteForm extends Model
 {

@@ -26,9 +26,9 @@ or add
 
 to the require section of your `composer.json` file.
 
-## Configuration
+## 配置
 
-Add module settings to your application config (`config/main.php`).
+添加模块配置到你的应用配置文件 (`config/main.php`).
 
 Entity names should be in camelCase like `itemVote`, `itemVoteGuests`, `itemLike` and `itemFavorite`.
 
@@ -62,13 +62,13 @@ return [
 ];
 ```
 
-After you downloaded and configured `hauntd/yii2-vote`, the last thing you need to do is updating your database schema by applying the migrations:
+下载并配置后 `hauntd/yii2-vote`, 您最后需要做的是通过应用迁移来更新数据库:
 
 ```
 php yii migrate/up --migrationPath=@vendor/hauntd/yii2-vote/migrations/
 ```
 
-## Usage
+## 使用
 
 Vote widget:
 
@@ -94,11 +94,11 @@ Like/Favorite widgets:
 ]); ?>
 ```
 
-## Change log
+## 更改日志
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Documentation
+## 文档
 
 * [Vote behaviors](docs/behaviors.md)
 * [Action events](docs/action-events.md)

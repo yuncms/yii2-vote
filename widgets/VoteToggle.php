@@ -1,6 +1,6 @@
 <?php
 
-namespace hauntd\vote\widgets;
+namespace yuncms\vote\widgets;
 
 use Yii;
 use yii\bootstrap\Html;

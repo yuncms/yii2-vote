@@ -1,8 +1,9 @@
 <?php
 
-namespace hauntd\vote\models;
+namespace yuncms\vote\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "vote_aggregate".
@@ -16,7 +17,7 @@ use Yii;
  * @property integer $negative
  * @property float $rating
  */
-class VoteAggregate extends \yii\db\ActiveRecord
+class VoteAggregate extends ActiveRecord
 {
     /**
      * @return string

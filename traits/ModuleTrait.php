@@ -1,6 +1,6 @@
 <?php
 
-namespace hauntd\vote\traits;
+namespace yuncms\vote\traits;
 
 use Yii;
 use hauntd\vote\Module;

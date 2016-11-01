@@ -1,4 +1,4 @@
-# Vote behaviors
+# Vote 行为
 
 In case when app renders a lot of some items (models) and you need to attach vote module to each it's better to add vote behaviors to your model.
 
@@ -6,11 +6,11 @@ With this behaviors you'll decrease the count of sql queries dramatically.
 
 For this you have to include these behaviors:
 
-- *VoteBehavior*: allows you to get vote data (votes count, user vote status).
-- *VoteQueryBehavior*: allows you to include vote search condition to your query.
+- *VoteBehavior*: 允许您获得投票数据（投票计数，用户投票状态）。
+- *VoteQueryBehavior*: 允许您在您的查询中包括投票搜索条件。
 
 
-## Configuration
+## 配置
 
 Imagine that you have model **Item** (`app\models\Item.php`):
 
@@ -64,9 +64,9 @@ class ItemQuery extends \yii\db\ActiveQuery
 }
 ```
 
-After that you can use `withVoteAggregate($entity)` and `withUserVote($entity)` query methods.
+之后你可以使用 `withVoteAggregate($entity)` 和 `withUserVote($entity)` 查询方法
 
-## Example
+## 离职
 
 `app/controllers/ItemsController.php`:
 
