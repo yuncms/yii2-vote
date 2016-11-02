@@ -74,12 +74,26 @@ class VoteForm extends Model
             $this->addError('entity', Yii::t('vote', 'Guests are not allowed for this voting.'));
             return false;
         }
+        /** @var \yii\db\ActiveRecord $targetModel */
         $targetModel = Yii::createObject($settings['modelName']);
-        if ($targetModel->findOne(['id' => $this->targetId]) == null) {
-            $this->addError('targetId', Yii::t('vote', 'Target model not found.'));
-            return false;
+        if (isset($settings['modelPk']) && empty($settings['modelPk'])) {
+            if ($targetModel->findOne([$settings['modelPk'] => $this->targetId]) == null) {
+                $this->addError('targetId', Yii::t('vote', 'Target model not found.'));
+                return false;
+            }
+        } else {
+            if($targetModel->getPrimaryKey() != null){
+                if ($targetModel->findOne([$targetModel->getPrimaryKey() => $this->targetId]) == null) {
+                    $this->addError('targetId', Yii::t('vote', 'Target model not found.'));
+                    return false;
+                }
+            } else {
+                if ($targetModel->findOne($this->targetId) == null) {
+                    $this->addError('targetId', Yii::t('vote', 'Target model not found.'));
+                    return false;
+                }
+            }
         }
-
         return true;
     }
 }
