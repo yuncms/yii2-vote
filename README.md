@@ -87,12 +87,12 @@ Vote widget:
 Like/Favorite widgets:
 
 ```php
-<?= \hauntd\vote\widgets\Favorite::widget([
+<?= \yuncms\vote\widgets\Favorite::widget([
     'entity' => 'itemFavorite',
     'model' => $model,
 ]); ?>
 
-<?= \hauntd\vote\widgets\Like::widget([
+<?= \yuncms\vote\widgets\Like::widget([
     'entity' => 'itemLike',
     'model' => $model,
 ]); ?>
