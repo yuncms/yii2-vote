@@ -1,4 +1,8 @@
-# Yii2-Vote 自用 [![Latest Version](https://img.shields.io/packagist/v/hauntd/yii2-vote.svg)](https://packagist.org/packages/hauntd/yii2-vote) [![License](https://poser.pugx.org/hauntd/yii2-vote/license.svg)](LICENSE.md) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hauntd/yii2-vote/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hauntd/yii2-vote/?branch=master) [![Code Climate](https://codeclimate.com/github/hauntd/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/hauntd/yii2-vote)
+# Yii2-Vote 自用
+
+修改自 [hauntd/yii2-vote](https://github.com/hauntd/yii2-vote)
+
+[![Latest Version](https://img.shields.io/packagist/v/hauntd/yii2-vote.svg)](https://packagist.org/packages/hauntd/yii2-vote) [![License](https://poser.pugx.org/hauntd/yii2-vote/license.svg)](LICENSE.md) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hauntd/yii2-vote/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hauntd/yii2-vote/?branch=master) [![Code Climate](https://codeclimate.com/github/hauntd/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/hauntd/yii2-vote)
 
 This module allows you to attach vote widgets, like/favorite buttons to your models.
 
@@ -8,20 +12,20 @@ This module allows you to attach vote widgets, like/favorite buttons to your mod
 - Customization (action, events, views)
 - Useful widgets included (Favorite button, Like button, Rating "up/down")
 
-## Installation
+## 安装
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
 Either run
 
 ```
-php composer.phar require --prefer-dist hauntd/yii2-vote "0.2.*"
+php composer.phar require --prefer-dist yuncms/yii2-vote "1.0.*"
 ```
 
 or add
 
 ```
-"hauntd/yii2-vote": "*"
+"yuncms/yii2-vote": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -36,7 +40,7 @@ Entity names should be in camelCase like `itemVote`, `itemVoteGuests`, `itemLike
 return [
   'modules' => [
     'vote' => [
-      'class' => hauntd\vote\Module::class,
+      'class' => 'yuncms\vote\Module',
         'guestTimeLimit' => 3600,
         'entities' => [
           // Entity -> Settings
@@ -62,10 +66,10 @@ return [
 ];
 ```
 
-下载并配置后 `hauntd/yii2-vote`, 您最后需要做的是通过应用迁移来更新数据库:
+下载并配置后 `yuncms/yii2-vote`, 您最后需要做的是通过应用迁移来更新数据库:
 
 ```
-php yii migrate/up --migrationPath=@vendor/hauntd/yii2-vote/migrations/
+php yii migrate/up --migrationPath=@vendor/yuncms/yii2-vote/migrations/
 ```
 
 ## 使用
@@ -73,7 +77,7 @@ php yii migrate/up --migrationPath=@vendor/hauntd/yii2-vote/migrations/
 Vote widget:
 
 ```php
-<?= \hauntd\vote\widgets\Vote::widget([
+<?= \yuncms\vote\widgets\Vote::widget([
   'entity' => 'itemVote',
   'model' => $model,
   'options' => ['class' => 'vote vote-visible-buttons']

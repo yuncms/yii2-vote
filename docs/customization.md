@@ -1,10 +1,10 @@
 # 定制
 
-## Custom CSS classes
+## 自定义CSS
 
 ```php
 /** @var $model \yii\db\ActiveRecord */
-<?= \hauntd\vote\widgets\Favorite::widget([
+<?= \yuncms\vote\widgets\Favorite::widget([
     'entity' => 'itemFavorite',
     'model' => $model,
     'options' => [
@@ -18,11 +18,11 @@
  ]); ?>
 ```
 
-## Custom favorite/like widget icon and label
+## 自定义 favorite/like 小部件 icon 和 label
 
 ```php
 /** @var $model \yii\db\ActiveRecord */
-<?= \hauntd\vote\widgets\Favorite::widget([
+<?= \yuncms\vote\widgets\Favorite::widget([
     'entity' => 'itemFavorite',
     'model' => $model,
     'buttonsOptions' => [
@@ -34,7 +34,7 @@
  ]); ?>
 ```
 
-## Change widget's view entirely
+## 完全更改小部件视图
 
 Imagine that you need to:
 
@@ -45,7 +45,7 @@ Imagine that you need to:
 
 ```php
 /** @var $model \yii\db\ActiveRecord */
-<?= \hauntd\vote\widgets\Favorite::widget([
+<?= \yuncms\vote\widgets\Favorite::widget([
     'entity' => 'itemFavorite',
     'model' => $model,
     'viewFile' => '@app/views/vote/save', // YOUR WIDGET VIEW
@@ -63,8 +63,8 @@ Imagine that you need to:
 ```php
 <?php
 
-use hauntd\vote\models\Vote;
 use yii\helpers\Html;
+use yuncms\vote\models\Vote;
 
 /* @var $jsCodeKey string */
 /* @var $entity string */

@@ -7,7 +7,7 @@ If you need to add or extend functionality (before or after vote action) you can
 ```php
  'modules' => [
     'vote' => [
-        class' => hauntd\vote\Module::className(),
+        class' => 'yuncms\vote\Module',
             'controllerMap' => [
                 'default' => 'app\controllers\MyVoteController', // here
             ],
@@ -25,17 +25,18 @@ If you need to add or extend functionality (before or after vote action) you can
     ],
 ```
 
-2. 添加 Action `hauntd\vote\actions\VoteAction` 到你的控制器:
+2. 添加 Action `yuncms\vote\actions\VoteAction` 到你的控制器:
 
 ```php
 <?php
 
 namespace app\controllers;
 
-use hauntd\vote\actions\VoteAction;
-use hauntd\vote\events\VoteActionEvent;
-use yii\web\ForbiddenHttpException;
+use Yii;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yuncms\vote\actions\VoteAction;
+use yuncms\vote\events\VoteActionEvent;
 
 class MyVoteController extends Controller
 {
@@ -46,14 +47,14 @@ class MyVoteController extends Controller
                 'class' => VoteAction::className(),
                 'on ' . VoteAction::EVENT_BEFORE_VOTE => function(VoteActionEvent $event) {
                     $event->responseData['before'] = microtime(true);
-                    if (\Yii::$app->request->userIP == '192.168.0.23') {
+                    if (Yii::$app->request->userIP == '192.168.0.23') {
                         throw new ForbiddenHttpException('You have no power here.');
                     }
                 },
                 'on ' . VoteAction::EVENT_AFTER_VOTE => function(VoteActionEvent $event) {
                     $event->responseData['after'] = microtime(true);
                     if ($event->voteForm->validate()) {
-                        \Yii::$app->cache->delete('someCache');
+                        Yii::$app->cache->delete('someCache');
                     }
                 },
             ],

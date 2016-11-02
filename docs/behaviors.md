@@ -21,7 +21,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use hauntd\vote\behaviors\VoteBehavior;
+use yuncms\vote\behaviors\VoteBehavior;
 
 class Item extends ActiveRecord
 {
@@ -44,16 +44,17 @@ class Item extends ActiveRecord
 }
 ```
 
-If you don't have `ItemQuery` class (or other query class for you model) - create new one and attach **VoteQueryBehavior**:
+如果你没有 `ItemQuery` 类 (or other query class for you model) - create new one and attach **VoteQueryBehavior**:
 
 ```php
 <?php
 
 namespace app\models;
 
-use hauntd\vote\behaviors\VoteQueryBehavior;
+use yii\db\ActiveQuery;
+use yuncms\vote\behaviors\VoteQueryBehavior;
 
-class ItemQuery extends \yii\db\ActiveQuery
+class ItemQuery extends ActiveQuery
 {
     public function behaviors()
     {
@@ -75,9 +76,9 @@ class ItemQuery extends \yii\db\ActiveQuery
 
 namespace app\controllers;
 
-use app\models\Item;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\data\ActiveDataProvider;
+use app\models\Item;
 
 class ItemsController extends Controller
 {
@@ -131,11 +132,11 @@ class ItemsController extends Controller
         <?= \yii\helpers\Html::encode($model->content) ?>
     </div>
     <div class="item-buttons'>
-        <?= \hauntd\vote\widgets\Vote::widget([
+        <?= \yuncms\vote\widgets\Vote::widget([
             'entity' => 'itemVote',
             'model' => $model,
         ]); ?>
-        <?= \hauntd\vote\widgets\Favorite::widget([
+        <?= \yuncms\vote\widgets\Favorite::widget([
             'entity' => 'itemFavorite',
             'model' => $model,
         ]); ?>
