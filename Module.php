@@ -74,7 +74,6 @@ class Module extends \yii\base\Module
     protected function getDefaultSettings()
     {
         return [
-            'modelPk' => null,
             'type' => self::TYPE_VOTING,
             'allowGuests' => false,
         ];
