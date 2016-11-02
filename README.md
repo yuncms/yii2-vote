@@ -1,6 +1,6 @@
 # Yii2-Vote 自用
 
-修改自 [hauntd/yii2-vote](https://github.com/hauntd/yii2-vote)
+修改自 [hauntd/yii2-vote](https://github.com/hauntd/yii2-vote),如果你想使用，请使用源码。谢谢！
 
 [![Latest Version](https://img.shields.io/packagist/v/hauntd/yii2-vote.svg)](https://packagist.org/packages/hauntd/yii2-vote) [![License](https://poser.pugx.org/hauntd/yii2-vote/license.svg)](LICENSE.md) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hauntd/yii2-vote/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hauntd/yii2-vote/?branch=master) [![Code Climate](https://codeclimate.com/github/hauntd/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/hauntd/yii2-vote)
 
