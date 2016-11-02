@@ -3,17 +3,17 @@
 namespace yuncms\vote\traits;
 
 use Yii;
-use hauntd\vote\Module;
+use yuncms\vote\Module;
 use yii\base\InvalidConfigException;
 
 /**
  * Trait ModuleTrait
- * @package hauntd\vote\traits
+ * @package yuncms\vote\traits
  */
 trait ModuleTrait
 {
     /**
-     * @return \hauntd\vote\Module
+     * @return \yuncms\vote\Module
      * @throws InvalidConfigException
      */
     public function getModule()
