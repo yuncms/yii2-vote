@@ -76,14 +76,9 @@ class VoteForm extends Model
         }
         /** @var \yii\db\ActiveRecord $targetModel */
         $targetModel = Yii::createObject($settings['modelName']);
-        if ((isset($settings['modelPk']) && empty($settings['modelPk'])) && $targetModel->findOne([$settings['modelPk'] => $this->targetId]) == null) {
+        if ($targetModel->findOne([$targetModel->primaryKey()[0] => $this->targetId]) == null) {
             $this->addError('targetId', Yii::t('vote', 'Target model not found.'));
             return false;
-        } else {
-            if ($targetModel->findOne($this->targetId) == null) {
-                $this->addError('targetId', Yii::t('vote', 'Target model not found.'));
-                return false;
-            }
         }
         return true;
     }
