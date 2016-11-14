@@ -1,12 +1,12 @@
 {
-    "name": "chiliec/yii2-vote",
+    "name": "yuncms/yii2-vote",
     "description": "Provides anonymous voting for any models",
     "keywords": ["vote", "anonymous", "voting"],
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/Chiliec/yii2-vote/issues",
-        "source": "https://github.com/Chiliec/yii2-vote"
+        "issues": "https://github.com/yuncms/yii2-vote/issues",
+        "source": "https://github.com/yuncms/yii2-vote"
     },
     "authors": [
         {
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "chiliec\\vote\\": ""
+            "yuncms\\vote\\": ""
         }
     },
     "require-dev": {
