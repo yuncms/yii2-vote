@@ -1,30 +1,20 @@
-<?php
-
-use yuncms\vote\models\Vote;
-
-/* @var $jsCodeKey string */
-/* @var $entity string */
-/* @var $model \yii\db\ActiveRecord */
-/* @var $targetId integer */
-/* @var $userValue null|integer */
-/* @var $positive integer */
-/* @var $negative integer */
-/* @var $rating float */
-/* @var $options array */
-
-?>
-<div class="<?= $options['class'] ?>"
-     data-rel="<?= $jsCodeKey ?>"
-     data-entity="<?= $entity ?>"
-     data-target-id="<?= $targetId ?>"
-     data-user-value="<?= $userValue ?>">
-    <button class="vote-btn vote-down <?= $userValue === Vote::VOTE_NEGATIVE ? 'vote-active' : '' ?>" data-action="negative">
-        <i class="glyphicon glyphicon-arrow-down"></i>
-    </button>
-    <div class="vote-count">
-        <span><?= $positive - $negative ?></span>
+<div class="text-center" id="vote-<?=$modelId?>-<?=$targetId?>" data-placement="top" data-container="body" data-toggle="popover">
+    <span id="vote-up-<?=$modelId?>-<?=$targetId?>" class="glyphicon glyphicon-thumbs-up" onclick="vote(<?=$modelId?>, <?=$targetId?>, 'like'); return false;" style="cursor: pointer;"><?=$likes?></span>
+    &nbsp;
+    <span id="vote-down-<?=$modelId?>-<?=$targetId?>" class="glyphicon glyphicon-thumbs-down" onclick="vote(<?=$modelId?>, <?=$targetId?>, 'dislike'); return false;" style="cursor: pointer;"><?=$dislikes?></span>
+    <div id="vote-response-<?=$modelId?>-<?=$targetId?>">
+        <?php if ($showAggregateRating) { ?>
+            <?=Yii::t('vote', 'Aggregate rating')?>: <?=$rating?>
+        <?php } ?>
     </div>
-    <button class="vote-btn vote-up <?= $userValue === Vote::VOTE_POSITIVE ? 'vote-active' : '' ?>" data-action="positive">
-        <i class="glyphicon glyphicon-arrow-up"></i>
-    </button>
+
 </div>
+<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+    <meta itemprop="interactionCount" content="UserLikes:<?=$likes?>"/>
+    <meta itemprop="interactionCount" content="UserDislikes:<?=$dislikes?>"/>
+    <meta itemprop="ratingValue" content="<?=$rating?>"/>
+    <meta itemprop="ratingCount" content="<?=$likes+$dislikes?>"/>
+    <meta itemprop="bestRating" content="10"/>
+    <meta itemprop="worstRating" content="0"/>
+</div>
+

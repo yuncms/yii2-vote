@@ -1,119 +1,114 @@
-# Yii2-Vote 自用
+# Vote for Yii2
 
-修改自 [hauntd/yii2-vote](https://github.com/hauntd/yii2-vote),如果你想使用，请使用源码。谢谢！
+[![Latest Stable Version](https://poser.pugx.org/chiliec/yii2-vote/v/stable.svg)](https://packagist.org/packages/chiliec/yii2-vote) [![Total Downloads](https://poser.pugx.org/chiliec/yii2-vote/downloads.svg)](https://packagist.org/packages/chiliec/yii2-vote) [![Build Status](https://travis-ci.org/Chiliec/yii2-vote.svg?branch=master)](https://travis-ci.org/Chiliec/yii2-vote) [![Test Coverage](https://codeclimate.com/github/Chiliec/yii2-vote/badges/coverage.svg)](https://codeclimate.com/github/Chiliec/yii2-vote/coverage) [![Code Climate](https://codeclimate.com/github/Chiliec/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/Chiliec/yii2-vote) [![License](https://poser.pugx.org/chiliec/yii2-vote/license.svg)](https://packagist.org/packages/chiliec/yii2-vote)
 
-[![Latest Version](https://img.shields.io/packagist/v/hauntd/yii2-vote.svg)](https://packagist.org/packages/hauntd/yii2-vote) [![License](https://poser.pugx.org/hauntd/yii2-vote/license.svg)](LICENSE.md) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hauntd/yii2-vote/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hauntd/yii2-vote/?branch=master) [![Code Climate](https://codeclimate.com/github/hauntd/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/hauntd/yii2-vote)
+![How yii2-vote works](https://raw.githubusercontent.com/Chiliec/yii2-vote/master/docs/showcase.gif)
 
-This module allows you to attach vote widgets, like/favorite buttons to your models.
+## Installation
 
-![Demo](https://raw.githubusercontent.com/hauntd/resources/master/yii2-vote/output.gif)
+Next steps will guide you through the process of installing yii2-vote using **composer**. Installation is a quick and easy three-step process.
 
-- Attach as many widgets to model as you need
-- Customization (action, events, views)
-- Useful widgets included (Favorite button, Like button, Rating "up/down")
+### Step 1: Install component via composer
 
-## 安装
-
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
-Either run
+Run command
 
 ```
-php composer.phar require --prefer-dist yuncms/yii2-vote "1.0.*"
+php composer.phar require --prefer-dist chiliec/yii2-vote "^3.0"
 ```
 
 or add
 
 ```
-"yuncms/yii2-vote": "*"
+"chiliec/yii2-vote": "^3.0"
 ```
 
 to the require section of your `composer.json` file.
 
-## 配置
 
-添加模块配置到你的应用配置文件 (`config/main.php`).
+### Step 2: Configuring your application
 
-Entity names should be in camelCase like `itemVote`, `itemVoteGuests`, `itemLike` and `itemFavorite`.
+Add following lines to your main configuration file:
 
 ```php
-return [
-  'modules' => [
+'bootstrap' => [
+    'chiliec\vote\components\VoteBootstrap',
+],
+'modules' => [
     'vote' => [
-      'class' => 'yuncms\vote\Module',
-        'guestTimeLimit' => 3600,
-        'entities' => [
-          // Entity -> Settings
-          'itemVote' => app\models\Item::class, // your model
-          'itemVoteGuests' => [
-              'modelName' => app\models\Item::class, // your model
-              'allowGuests' => true,
-          ],
-          'itemLike' => [
-              'modelName' => app\models\Item::class, // your model
-              'type' => hauntd\vote\Module::TYPE_TOGGLE, // like/favorite button
-          ],
-          'itemFavorite' => [
-              'modelName' => app\models\Item::class, // your model
-              'type' => hauntd\vote\Module::TYPE_TOGGLE, // like/favorite button
-          ],
-      ],
+        'class' => 'chiliec\vote\Module',
+        // global values for all models
+        // 'allowGuests' => true,
+        // 'allowChangeVote' => true,
+        'models' => [
+        	// example declaration of models
+            // \common\models\Post::className(),
+            // 'backend\models\Post',
+            // 2 => 'frontend\models\Story',
+            // 3 => [
+            //     'modelName' => \backend\models\Mail::className(),
+            //     you can rewrite global values for specific model
+            //     'allowGuests' => false,
+            //     'allowChangeVote' => false,
+            // ],
+        ],      
     ],
-  ],
-  'components' => [
-    ...
-  ]
-];
+],
 ```
 
-下载并配置后 `yuncms/yii2-vote`, 您最后需要做的是通过应用迁移来更新数据库:
-
-```
-php yii migrate/up --migrationPath=@vendor/yuncms/yii2-vote/migrations/
-```
-
-## 使用
-
-Vote widget:
+And add widget in view:
 
 ```php
-<?= \yuncms\vote\widgets\Vote::widget([
-  'entity' => 'itemVote',
-  'model' => $model,
-  'options' => ['class' => 'vote vote-visible-buttons']
+<?php echo \chiliec\vote\widgets\Vote::widget([
+    'model' => $model,
+    // optional fields
+    // 'showAggregateRating' => true,
 ]); ?>
 ```
 
-Like/Favorite widgets:
+Also you can add widget for display top rated models:
 
 ```php
-<?= \yuncms\vote\widgets\Favorite::widget([
-    'entity' => 'itemFavorite',
-    'model' => $model,
-]); ?>
-
-<?= \yuncms\vote\widgets\Like::widget([
-    'entity' => 'itemLike',
-    'model' => $model,
-]); ?>
+<?php echo \chiliec\vote\widgets\TopRated::widget([
+    'modelName' => \common\models\Post::className(),
+    'title' => 'Top rated models',
+    'path' => 'site/view',
+    'limit' => 10,
+    'titleField' => 'title',
+]) ?>
 ```
 
-## 更改日志
+### Step 3: Updating database schema
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+After you downloaded and configured Yii2-vote, the last thing you need to do is updating your database schema by applying the migrations:
 
-## 文档
+```bash
+$ php yii migrate/up --migrationPath=@vendor/chiliec/yii2-vote/migrations
+```
 
-* [Vote behaviors](docs/behaviors.md)
-* [Action events](docs/action-events.md)
-* [Customization](docs/customization.md)
+## Documentation
+
+Extended information about configuration of this module see in [docs/README.md](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md). There you can find:
+* [Migration from 2.* to 3.0](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#migration-from-2-to-30)
+* [Manually add behavior in models](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#manually-add-behavior-in-models)
+* [Sorting by rating in data provider](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#sorting-by-rating-in-data-provider)
+* [Overriding views](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#overriding-views)
+* [Customizing JS-events](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#customizing-js-events)
+* [Rich snippet in search engines](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#rich-snippet-in-search-engines)
 
 ## License
 
-BSD 3-Clause License. Please see [License File](LICENSE.md) for more information.
+yii2-vote is released under the BSD 3-Clause License. See the bundled [LICENSE.md](https://github.com/Chiliec/yii2-vote/blob/master/LICENSE.md) for details.
 
-[ico-version]: https://img.shields.io/packagist/v/hauntd/yii2-vote.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/hauntd/yii2-vote.svg?style=flat-square
-[link-packagist]: https://packagist.org/packages/hauntd/yii2-vote
-[link-downloads]: https://packagist.org/packages/hauntd/yii2-vote
-[link-author]: https://github.com/hauntd
+## List of contributors
+
+* [Chiliec](https://github.com/Chiliec) - Maintainer
+* [loveorigami](https://github.com/loveorigami) - Ideological inspirer
+* [fourclub](https://github.com/fourclub) - PK name fix in behavior
+* [yurkinx](https://github.com/yurkinx) - Duplication js render fix
+* [n1k88](https://github.com/n1k88) - German translation
+
+## How to contribute 
+
+See [CONTRIBUTING.md](https://github.com/Chiliec/yii2-vote/blob/master/CONTRIBUTING.md) for details.
+
+Enjoy and don't hesitate to send issues and pull requests :)

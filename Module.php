@@ -1,81 +1,55 @@
 <?php
-
-namespace yuncms\vote;
-
-use Yii;
-use yii\base\InvalidConfigException;
-
 /**
- * @author Alexander Kononenko <contact@hauntd.me>
- * @package hauntd\vote
+ * @link https://github.com/Chiliec/yii2-vote
+ * @author Vladimir Babin <vovababin@gmail.com>
+ * @license http://opensource.org/licenses/BSD-3-Clause
  */
+
+namespace chiliec\vote;
+
+use yii\base\InvalidConfigException;
+use Yii;
+
 class Module extends \yii\base\Module
 {
-    const TYPE_VOTING = 'voting';
-    const TYPE_TOGGLE = 'toggle';
+    public $controllerNamespace = 'chiliec\vote\controllers';
 
     /**
-     * @var bool Apply default styles by default
+     * Is allow vote for guests
+     * @var bool
      */
-    public $registerAsset = true;
+    public $allowGuests = true;
 
     /**
-     * @var array Entities that will be used by vote widgets.
-     * - `$modelName`: model class name
-     * - `$allowGuests`: allow users to vote
-     * - `$type`: vote type (Module::TYPE_VOTING or Module::TYPE_TOGGLE)
+     * Is enable pop over
+     * @var bool
      */
-    public $entities;
+    public $popOverEnabled = false;
 
     /**
-     * @var int
+     * Is allow change votes
+     * @var bool
      */
-    public $guestTimeLimit = 3600; // 1 hour per vote for guests
+    public $allowChangeVote = true;
 
     /**
-     * @var string
+     * Matching models with integer id's
+     * @var array
      */
-    public $redirectUrl = '/site/login';
+    public $models;
 
-    /**
-     * @param $entity
-     * @return int
-     */
-    public function encodeEntity($entity)
+    public function init()
     {
-        return crc32($entity);
-    }
-
-    /**
-     * @param $entity
-     * @return array|null
-     * @throws InvalidConfigException
-     */
-    public function getSettingsForEntity($entity)
-    {
-        if (!isset($this->entities[$entity])) {
-            return null;
+        parent::init();
+        if (!isset($this->models)) {
+            throw new InvalidConfigException('models not configurated');
         }
-        $settings = $this->entities[$entity];
-        if (!is_array($settings)) {
-            $settings = ['modelName' => $settings];
+        if (empty(Yii::$app->i18n->translations['vote'])) {
+            Yii::$app->i18n->translations['vote'] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en-US',
+                'basePath' => __DIR__ . '/messages',
+            ];
         }
-        $settings = array_merge($this->getDefaultSettings(), $settings);
-        if (!in_array($settings['type'], [self::TYPE_TOGGLE, self::TYPE_VOTING])) {
-            throw new InvalidConfigException('Unsupported voting type.');
-        }
-
-        return $settings;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultSettings()
-    {
-        return [
-            'type' => self::TYPE_VOTING,
-            'allowGuests' => false,
-        ];
     }
 }

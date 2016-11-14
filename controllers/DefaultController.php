@@ -1,25 +1,20 @@
 <?php
-
-namespace yuncms\vote\controllers;
-
-use yuncms\vote\actions\VoteAction;
-use Yii;
-use yii\web\Controller;
-
 /**
- * @author Alexander Kononenko <contact@hauntd.me>
- * @package yuncms\vote\controllers
+ * @link https://github.com/Chiliec/yii2-vote
+ * @author Vladimir Babin <vovababin@gmail.com>
+ * @license http://opensource.org/licenses/BSD-3-Clause
  */
+
+namespace chiliec\vote\controllers;
+
+use chiliec\vote\actions\VoteAction;
+use yii\web\Controller;
+use Yii;
+
 class DefaultController extends Controller
 {
-    /**
-     * @var string
-     */
     public $defaultAction = 'vote';
 
-    /**
-     * @return array
-     */
     public function actions()
     {
         return [

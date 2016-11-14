@@ -1,168 +1,80 @@
 <?php
+/**
+ * @link https://github.com/Chiliec/yii2-vote
+ * @author Vladimir Babin <vovababin@gmail.com>
+ * @license http://opensource.org/licenses/BSD-3-Clause
+ */
 
-namespace yuncms\vote\actions;
+namespace chiliec\vote\actions;
 
-use Yii;
-use yuncms\vote\Module;
-use yuncms\vote\events\VoteActionEvent;
-use yuncms\vote\models\Vote;
-use yuncms\vote\models\VoteAggregate;
-use yuncms\vote\models\VoteForm;
-use yuncms\vote\traits\ModuleTrait;
+use chiliec\vote\models\Rating;
 use yii\base\Action;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\Response;
+use Yii;
 
-/**
- * Class VoteAction
- * @package yuncms\vote\actions
- */
 class VoteAction extends Action
 {
-    use ModuleTrait;
-
-    const EVENT_BEFORE_VOTE = 'beforeVote';
-    const EVENT_AFTER_VOTE = 'afterVote';
-
-    /**
-     * @return array
-     * @throws MethodNotAllowedHttpException
-     */
     public function run()
     {
-        if (!Yii::$app->request->getIsAjax() || !Yii::$app->request->getIsPost()) {
+        if (Yii::$app->request->getIsAjax()) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if (null === $modelId = (int)Yii::$app->request->post('modelId')) {
+                return ['content' => Yii::t('vote', 'modelId has not been sent')];
+            }
+            if (null === $targetId = (int)Yii::$app->request->post('targetId')) {
+                return ['content' => Yii::t('vote', 'The purpose is not defined')];
+            }
+            $act = Yii::$app->request->post('act');
+            if (!in_array($act, ['like', 'dislike'], true)) {
+                return ['content' => Yii::t('vote', 'Wrong action')];
+            }
+            $value = $act === 'like' ? Rating::VOTE_LIKE : Rating::VOTE_DISLIKE;
+            $userId = Yii::$app->user->getId();
+            if ($userId === null && !Rating::getIsAllowGuests($modelId)) {
+                return ['content' => Yii::t('vote', 'Guests are not allowed to vote')];
+            }
+            if (!$userIp = Rating::compressIp(Yii::$app->request->getUserIP())) {
+                return ['content' => Yii::t('vote', 'The user is not recognized')];
+            }
+            if (!is_int($modelId)) {
+                return ['content' => Yii::t('vote', 'The model is not registered')];
+            }
+            if (Rating::getIsAllowGuests($modelId)) {
+                $isVoted = Rating::findOne(['model_id' => $modelId, 'target_id' => $targetId, 'user_ip' => $userIp]);
+            } else {
+                $isVoted = Rating::findOne(['model_id' => $modelId, 'target_id' => $targetId, 'user_id' => $userId]);
+            }
+            if (is_null($isVoted)) {
+                $newVote = new Rating;
+                $newVote->model_id = $modelId;
+                $newVote->target_id = $targetId;
+                $newVote->user_id = $userId;
+                $newVote->user_ip = $userIp;
+                $newVote->value = $value;
+                if ($newVote->save()) {
+                    if ($value === Rating::VOTE_LIKE) {
+                        return ['content' => Yii::t('vote', 'Your vote is accepted. Thanks!'), 'success' => true];
+                    } else {
+                        return ['content' => Yii::t('vote', 'Thanks for your opinion'), 'success' => true];
+                    }
+                } else {
+                    return ['content' => Yii::t('vote', 'Validation error')];
+                }
+            } else {
+                if ($isVoted->value !== $value && Rating::getIsAllowChangeVote($modelId)) {
+                    $isVoted->value = $value;
+                    if ($isVoted->save()) {
+                        return ['content' => Yii::t('vote', 'Your vote has been changed. Thanks!'), 'success' => true, 'changed' => true];
+                    } else {
+                        return ['content' => Yii::t('vote', 'Validation error')];
+                    }
+                }
+                return ['content' => Yii::t('vote', 'You have already voted!')];
+            }
+        } else {
             throw new MethodNotAllowedHttpException(Yii::t('vote', 'Forbidden method'), 405);
         }
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $module = $this->getModule();
-        $form = new VoteForm();
-        $form->load(Yii::$app->request->post());
-        $this->trigger(self::EVENT_BEFORE_VOTE, $event = $this->createEvent($form, $response = []));
-
-        if ($form->validate()) {
-            $settings = $module->getSettingsForEntity($form->entity);
-            if ($settings['type'] == Module::TYPE_VOTING) {
-                $response = $this->processVote($form);
-            } else {
-                $response = $this->processToggle($form);
-            }
-            $response = array_merge($event->responseData, $response);
-            $response['aggregate'] = VoteAggregate::findOne([
-                'entity' => $module->encodeEntity($form->entity),
-                'target_id' => $form->targetId
-            ]);
-        } else {
-            $response = ['success' => false, 'errors' => $form->errors];
-        }
-
-        $this->trigger(self::EVENT_AFTER_VOTE, $event = $this->createEvent($form, $response));
-
-        return $event->responseData;
     }
 
-    /**
-     * Processes a vote (+/-) request.
-     *
-     * @param VoteForm $form
-     * @return array
-     * @throws \Exception
-     * @throws \yii\base\InvalidConfigException
-     */
-    protected function processVote(VoteForm $form)
-    {
-        /* @var $vote Vote */
-        $module = $this->getModule();
-        $response = ['success' => false];
-        $searchParams = ['entity' => $module->encodeEntity($form->entity), 'target_id' => $form->targetId];
-
-        if (Yii::$app->user->isGuest) {
-            $vote = Vote::find()
-                ->where($searchParams)
-                ->andWhere(['user_ip' => Yii::$app->request->userIP])
-                ->andWhere('UNIX_TIMESTAMP() - created_at < :limit', [':limit' => $module->guestTimeLimit])
-                ->one();
-        } else {
-            $vote = Vote::findOne(array_merge($searchParams, ['user_id' => Yii::$app->user->id]));
-        }
-
-        if ($vote == null) {
-            $response = $this->createVote($module->encodeEntity($form->entity), $form->targetId, $form->getValue());
-        } else {
-            if ($vote->value !== $form->getValue()) {
-                $vote->value = $form->getValue();
-                if ($vote->save()) {
-                    $response = ['success' => true, 'changed' => true];
-                }
-            }
-        }
-
-        return $response;
-    }
-
-    /**
-     * Processes a vote toggle request (like/favorite etc).
-     *
-     * @param VoteForm $form
-     * @return array
-     * @throws \Exception
-     * @throws \yii\base\InvalidConfigException
-     */
-    protected function processToggle(VoteForm $form)
-    {
-        /* @var $vote Vote */
-        $module = $this->getModule();
-        $vote = Vote::findOne([
-            'entity' => $module->encodeEntity($form->entity),
-            'target_id' => $form->targetId,
-            'user_id' => Yii::$app->user->id
-        ]);
-
-        if ($vote == null) {
-            $response = $this->createVote($module->encodeEntity($form->entity), $form->targetId, $form->getValue());
-            $response['toggleValue'] = 1;
-        } else {
-            $vote->delete();
-            $response = ['success' => true, 'toggleValue' => 0];
-        }
-
-        return $response;
-    }
-
-    /**
-     * Creates new vote entry and returns response data.
-     *
-     * @param string $entity
-     * @param integer $targetId
-     * @param integer $value
-     * @return array
-     */
-    protected function createVote($entity, $targetId, $value)
-    {
-        $vote = new Vote();
-        $vote->entity = $entity;
-        $vote->target_id = $targetId;
-        $vote->value = $value;
-
-        if ($vote->save()) {
-            return ['success' => true];
-        } else {
-            return ['success' => false, 'errors' => $vote->errors];
-        }
-    }
-
-    /**
-     * @param VoteForm $voteForm
-     * @param array $responseData
-     * @return object
-     * @throws \yii\base\InvalidConfigException
-     */
-    protected function createEvent(VoteForm $voteForm, array $responseData)
-    {
-        return Yii::createObject([
-            'class' => VoteActionEvent::className(),
-            'voteForm' => $voteForm,
-            'responseData' => $responseData
-        ]);
-    }
 }
