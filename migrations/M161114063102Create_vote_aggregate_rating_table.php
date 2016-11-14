@@ -1,0 +1,42 @@
+<?php
+
+namespace yuncms\vote\migrations;
+
+use yii\db\Migration;
+
+class M161114063102Create_vote_aggregate_rating_table extends Migration
+{
+    public function up()
+    {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
+        $this->createTable('{{%aggregate_rating}}', [
+            'id' => $this->primaryKey(),
+            'source_type' => $this->string(100)->notNull(),
+            'source_id' => $this->integer()->notNull(),
+            'likes' => $this->integer()->notNull(),
+            'dislikes' => $this->integer()->notNull(),
+            'rating' => $this->double(3,2)->unsigned()->notNull()
+        ], $tableOptions);
+        $this->createIndex('aggregate_model_id_target_id', '{{%aggregate_rating}}', ['source_type','source_id'], true);
+    }
+
+    public function down()
+    {
+        $this->dropTable('{{%aggregate_rating}}');
+    }
+
+    /*
+    // Use safeUp/safeDown to run migration code within a transaction
+    public function safeUp()
+    {
+    }
+
+    public function safeDown()
+    {
+    }
+    */
+}
