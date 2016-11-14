@@ -26,7 +26,7 @@ class AggregateRating extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%aggregate_rating}}';
+        return '{{%vote_aggregate_rating}}';
     }
 
     /**

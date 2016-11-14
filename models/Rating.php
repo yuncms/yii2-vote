@@ -34,7 +34,7 @@ class Rating extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%rating}}';
+        return '{{%vote_rating}}';
     }
 
     public function behaviors()

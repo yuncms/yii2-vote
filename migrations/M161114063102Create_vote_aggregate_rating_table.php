@@ -13,7 +13,7 @@ class M161114063102Create_vote_aggregate_rating_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%aggregate_rating}}', [
+        $this->createTable('{{%vote_aggregate_rating}}', [
             'id' => $this->primaryKey(),
             'source_type' => $this->string(100)->notNull(),
             'source_id' => $this->integer()->notNull(),
@@ -21,12 +21,12 @@ class M161114063102Create_vote_aggregate_rating_table extends Migration
             'dislikes' => $this->integer()->notNull(),
             'rating' => $this->double(3,2)->unsigned()->notNull()
         ], $tableOptions);
-        $this->createIndex('aggregate_model_id_target_id', '{{%aggregate_rating}}', ['source_type','source_id'], true);
+        $this->createIndex('aggregate_model_id_target_id', '{{%vote_aggregate_rating}}', ['source_type','source_id'], true);
     }
 
     public function down()
     {
-        $this->dropTable('{{%aggregate_rating}}');
+        $this->dropTable('{{%vote_aggregate_rating}}');
     }
 
     /*
