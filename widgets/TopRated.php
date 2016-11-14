@@ -5,16 +5,20 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\widgets;
+namespace yuncms\vote\widgets;
 
 use Yii;
-use chiliec\vote\models\Rating;
-use chiliec\vote\models\AggregateRating;
 use yii\base\Widget;
 use yii\helpers\Url;
-use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
+use yii\base\InvalidParamException;
+use yuncms\vote\models\Rating;
+use yuncms\vote\models\AggregateRating;
 
+/**
+ * Class TopRated
+ * @package yuncms\vote\widgets
+ */
 class TopRated extends Widget
 {
     /**

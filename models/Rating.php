@@ -5,13 +5,13 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\models;
+namespace yuncms\vote\models;
 
 use Yii;
 use yii\base\InvalidParamException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use chiliec\vote\models\AggregateRating;
+use yuncms\vote\models\AggregateRating;
 
 /**
  * This is the model class for table "{{%rating}}".

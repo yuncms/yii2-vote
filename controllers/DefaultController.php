@@ -5,12 +5,16 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\controllers;
+namespace yuncms\vote\controllers;
 
-use chiliec\vote\actions\VoteAction;
-use yii\web\Controller;
 use Yii;
+use yii\web\Controller;
+use yuncms\vote\actions\VoteAction;
 
+/**
+ * Class DefaultController
+ * @package yuncms\vote\controllers
+ */
 class DefaultController extends Controller
 {
     public $defaultAction = 'vote';

@@ -5,14 +5,18 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\actions;
+namespace yuncms\vote\actions;
 
-use chiliec\vote\models\Rating;
-use yii\base\Action;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\Response;
 use Yii;
+use yii\base\Action;
+use yii\web\Response;
+use yii\web\MethodNotAllowedHttpException;
+use yuncms\vote\models\Rating;
 
+/**
+ * Class VoteAction
+ * @package yuncms\vote\actions
+ */
 class VoteAction extends Action
 {
     public function run()

@@ -5,15 +5,19 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\behaviors;
+namespace yuncms\vote\behaviors;
 
-use chiliec\vote\models\Rating;
-use chiliec\vote\models\AggregateRating;
-use yii\db\ActiveRecord;
 use yii\base\Behavior;
-use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+use yii\base\InvalidConfigException;
+use yuncms\vote\models\Rating;
+use yuncms\vote\models\AggregateRating;
 
+/**
+ * Class RatingBehavior
+ * @package yuncms\vote\behaviors
+ */
 class RatingBehavior extends Behavior
 {
     /**

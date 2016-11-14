@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\models;
+namespace yuncms\vote\models;
 
 use Yii;
 

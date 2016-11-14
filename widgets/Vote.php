@@ -5,17 +5,21 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\widgets;
+namespace yuncms\vote\widgets;
 
-use chiliec\vote\models\Rating;
-use yii\base\InvalidParamException;
+use Yii;
+use yii\web\View;
 use yii\base\Widget;
 use yii\helpers\Html;
-use yii\web\View;
-use yii\web\JsExpression;
 use yii\helpers\Json;
-use Yii;
+use yii\web\JsExpression;
+use yii\base\InvalidParamException;
+use yuncms\vote\models\Rating;
 
+/**
+ * Class Vote
+ * @package yuncms\vote\widgets
+ */
 class Vote extends Widget
 {
     /**
