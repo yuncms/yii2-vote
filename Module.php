@@ -5,14 +5,18 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote;
+namespace yuncms\vote;
 
-use yii\base\InvalidConfigException;
 use Yii;
+use yii\base\InvalidConfigException;
 
+/**
+ * Class Module
+ * @package yuncms\vote
+ */
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'chiliec\vote\controllers';
+    public $controllerNamespace = 'yuncms\vote\controllers';
 
     /**
      * Is allow vote for guests
