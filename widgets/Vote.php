@@ -23,7 +23,7 @@ use yuncms\vote\models\Rating;
 class Vote extends Widget
 {
     /**
-     * @var ActiveRecord
+     * @var \yii\dbActiveRecord
      */
     public $model;
 
@@ -35,7 +35,7 @@ class Vote extends Widget
     /**
      * @var bool
      */
-    public $showAggregateRating = true;
+    public $showAggregateRating = false;
 
     /**
      * @var string

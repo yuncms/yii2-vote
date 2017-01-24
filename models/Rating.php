@@ -80,7 +80,7 @@ class Rating extends ActiveRecord
      */
     public function afterSave($insert, $changedAttributes)
     {
-        static::updateRating($this->attributes['model'], $this->attributes['model_id']);
+        static::updateRating($this->model, $this->model_id);
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -104,24 +104,6 @@ class Rating extends ActiveRecord
     }
 
     /**
-     * @param integer $modelId Id of model
-     * @return string|false Model name or false if matches not found
-     */
-    public static function getModelNameById($modelId)
-    {
-        if (null !== $models = Yii::$app->getModule('vote')->models) {
-            if (isset($models[$modelId])) {
-                if (is_array($models[$modelId])) {
-                    return $models[$modelId]['modelName'];
-                } else {
-                    return $models[$modelId];
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
      * 是否允许游客投票
      * @param string $model Id of model
      * @return boolean Checks exists permission for guest voting in model params or return global value
@@ -137,7 +119,7 @@ class Rating extends ActiveRecord
 
     /**
      * 是否允许更改投票
-     * @param string $modelId Id of model
+     * @param string $model Id of model
      * @return boolean Checks exists permission for change vote in model params or return global value
      */
     public static function getIsAllowChangeVote($model)
@@ -166,11 +148,12 @@ class Rating extends ActiveRecord
             $rating = 0;
         }
         $rating = round($rating * 10, 2);
-        $aggregateModel = AggregateRating::findOne([
-            'model' => $model,
-            'model_id' => $modelId,
-        ]);
-        if (null === $aggregateModel) {
+
+        if (($aggregateModel = AggregateRating::findOne([
+                'model' => $model,
+                'model_id' => $modelId,
+            ])) == null
+        ) {
             $aggregateModel = new AggregateRating;
             $aggregateModel->model = $model;
             $aggregateModel->model_id = $modelId;
@@ -179,5 +162,15 @@ class Rating extends ActiveRecord
         $aggregateModel->dislikes = $dislikes;
         $aggregateModel->rating = $rating;
         $aggregateModel->save();
+
+    }
+
+    public static function create($attribute)
+    {
+        $model = new static ($attribute);
+        if ($model->save()) {
+            return $model;
+        }
+        return false;
     }
 }

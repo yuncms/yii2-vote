@@ -58,15 +58,15 @@ class TopRated extends Widget
     {
     	$modelName = $this->modelName;
         $ratingArray = AggregateRating::find()
-        ->select('target_id, rating')
-        ->where('model_id = :modelId', [
-            'modelId' => Rating::getModelIdByName($modelName),
+        ->select('model_id, rating')
+        ->where('model = :model', [
+            'model' => Rating::getNameByModel($modelName),
         ])
         ->orderBy('rating DESC')
         ->limit($this->limit)
         ->asArray()
         ->all();
-        $ids = ArrayHelper::getColumn($ratingArray, 'target_id');
+        $ids = ArrayHelper::getColumn($ratingArray, 'model');
         $models = $modelName::find()
             ->joinWith('aggregate')
             ->where(['in', $modelName::tableName() . '.' . $modelName::primaryKey()[0], $ids])

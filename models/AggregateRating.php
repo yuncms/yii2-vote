@@ -14,8 +14,8 @@ use yii\db\ActiveRecord;
  * This is the model class for table "{{%vote_aggregate_rating}}".
  *
  * @property integer $id
+ * @property integer $model
  * @property integer $model_id
- * @property integer $target_id
  * @property integer $likes
  * @property integer $dislikes
  * @property double $rating
@@ -37,7 +37,7 @@ class AggregateRating extends ActiveRecord
     {
         return [
             [['model', 'model_id', 'likes', 'dislikes', 'rating'], 'required'],
-            [['model', 'model_id', 'likes', 'dislikes'], 'integer'],
+            [['model_id', 'likes', 'dislikes'], 'integer'],
             [['rating'], 'number']
         ];
     }
