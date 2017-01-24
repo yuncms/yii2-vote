@@ -36,6 +36,11 @@ class Module extends \yii\base\Module
      */
     public $allowChangeVote = true;
 
+    /**
+     * Matching models with integer id's
+     * @var array
+     */
+    public $models;
 
     public function init()
     {
