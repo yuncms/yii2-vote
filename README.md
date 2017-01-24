@@ -90,8 +90,7 @@ $ php yii migrate/up --migrationPath=@vendor/yuncms/yii2-vote/migrations
 
 ## Documentation
 
-Extended information about configuration of this module see in [docs/README.md](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md). There you can find:
-* [Migration from 2.* to 3.0](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#migration-from-2-to-30)
+Extended information about configuration of this module see in [docs/README.md](https://github.com/yuncms/yii2-vote/blob/master/docs/README.md). There you can find:
 * [Manually add behavior in models](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#manually-add-behavior-in-models)
 * [Sorting by rating in data provider](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#sorting-by-rating-in-data-provider)
 * [Overriding views](https://github.com/Chiliec/yii2-vote/blob/master/docs/README.md#overriding-views)
