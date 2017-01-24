@@ -9,7 +9,6 @@ namespace yuncms\vote\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yuncms\vote\actions\VoteAction;
 
 /**
  * Class DefaultController
@@ -23,7 +22,7 @@ class DefaultController extends Controller
     {
         return [
             'vote' => [
-                'class' => VoteAction::className(),
+                'class' => 'yuncms\vote\actions\VoteAction',
             ]
         ];
     }
