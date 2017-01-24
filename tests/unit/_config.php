@@ -7,6 +7,20 @@ return [
     'bootstrap' => [
         'yuncms\vote\components\VoteBootstrap',
     ],
+    'controllerMap' => [
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            //自动应答
+            'interactive' => 0,
+            //命名空间
+            'migrationNamespaces' => [
+
+                'yuncms\vote\migrations',
+                
+            ],
+            // 完全禁用非命名空间迁移
+            //'migrationPath' => null,
+        ],
     'components' => [
         'db' => [
             'class' => '\yii\db\Connection',
