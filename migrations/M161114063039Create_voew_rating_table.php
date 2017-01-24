@@ -15,15 +15,15 @@ class M161114063039Create_voew_rating_table extends Migration
 
         $this->createTable('{{%vote_rating}}', [
             'id' => $this->primaryKey(),
-            'source_type' => $this->string(100)->notNull(),
-            'source_id' => $this->integer()->notNull(),
+            'model_type' => $this->string(100)->notNull(),
+            'model_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->defaultValue(null),
             'user_ip'=>$this->string()->notNull(),
             'value' => $this->boolean()->notNull(),
             'date' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('rating_source_type_source_id', '{{%vote_rating}}', ['source_type','source_id'], false);
+        $this->createIndex('rating_model_type_model_id', '{{%vote_rating}}', ['model_type','model_id'], false);
         $this->createIndex('rating_user_id', '{{%vote_rating}}', 'user_id', false);
         $this->createIndex('rating_user_ip', '{{%vote_rating}}', 'user_ip', false);
     }
