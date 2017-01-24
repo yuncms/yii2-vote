@@ -52,8 +52,8 @@ class Module extends \yii\base\Module
         if (!isset($this->models)) {
             throw new InvalidConfigException('models not configurated');
         }
-        if (empty(Yii::$app->i18n->translations['vote'])) {
-            Yii::$app->i18n->translations['vote'] = [
+        if (!isset(Yii::$app->i18n->translations['vote*'])) {
+            Yii::$app->i18n->translations['vote*'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en-US',
                 'basePath' => __DIR__ . '/messages',
