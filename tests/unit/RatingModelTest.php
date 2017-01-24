@@ -5,9 +5,9 @@ class RatingModelTest extends \yii\codeception\TestCase
 {
     public $appConfig = '@tests/unit/_config.php';
 
-    public $firstModelId = 255;
-    public $secondModelId = 256;
-    public $thirdModelId = 257;
+    public $firstModelId = '255';
+    public $secondModelId = '256';
+    public $thirdModelId = '257';
 
     public $firstModelName = 'tests\unit\mocks\FakeModel';
     public $secondModelName = 'tests\unit\mocks\FakeModel2';
@@ -15,26 +15,26 @@ class RatingModelTest extends \yii\codeception\TestCase
     
     public function testGetModelIdByName()
     {
-    	$firstModelId = Rating::getModelIdByName($this->firstModelName);
+    	$firstModelId = Rating::getNameByModel($this->firstModelName);
     	$this->assertEquals($firstModelId, $this->firstModelId);
 
-    	$secondModelId = Rating::getModelIdByName($this->secondModelName);
+    	$secondModelId = Rating::getNameByModel($this->secondModelName);
     	$this->assertEquals($secondModelId, $this->secondModelId);
 
-        $thirdModelId = Rating::getModelIdByName($this->thirdModelName);
+        $thirdModelId = Rating::getNameByModel($this->thirdModelName);
         $this->assertEquals($thirdModelId, $this->thirdModelId);
 
     }
 
     public function testGetModelNameById()
     {
-    	$firstModelName = Rating::getModelNameById($this->firstModelId);
+    	$firstModelName = Rating::getNameByModel($this->firstModelId);
     	$this->assertEquals($firstModelName, $this->firstModelName);
 
-    	$secondModelName = Rating::getModelNameById($this->secondModelId);
+    	$secondModelName = Rating::getNameByModel($this->secondModelId);
     	$this->assertEquals($secondModelName, $this->secondModelName);
 
-        $thirdModelName = Rating::getModelNameById($this->thirdModelId);
+        $thirdModelName = Rating::getNameByModel($this->thirdModelId);
         $this->assertEquals($thirdModelName, $this->thirdModelName);
     }
 
