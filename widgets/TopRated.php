@@ -46,31 +46,33 @@ class TopRated extends Widget
      */
     public $titleField = 'title';
 
+    /**
+     *
+     */
     public function init()
     {
         parent::init();
         if ($this->modelName === null) {
-        	throw new InvalidParamException(Yii::t('vote', 'modelName is not defined'));
+            throw new InvalidParamException(Yii::t('vote', 'modelName is not defined'));
         }
     }
 
     public function run()
     {
-    	$modelName = $this->modelName;
+        $modelName = $this->modelName;
         $ratingArray = AggregateRating::find()
-        ->select('model_id, rating')
-        ->where('model = :model', [
-            'model' => Rating::getNameByModel($modelName),
-        ])
-        ->orderBy('rating DESC')
-        ->limit($this->limit)
-        ->asArray()
-        ->all();
-        $ids = ArrayHelper::getColumn($ratingArray, 'model');
+            ->select(['model_id', 'rating'])
+            ->where(['model' => Rating::getNameByModel($modelName)])
+            ->orderBy(['rating' => SORT_DESC])
+            ->limit($this->limit)
+            ->asArray()
+            ->all();
+        $ids = ArrayHelper::getColumn($ratingArray, 'model_id');
+
         $models = $modelName::find()
             ->joinWith('aggregate')
             ->where(['in', $modelName::tableName() . '.' . $modelName::primaryKey()[0], $ids])
-            ->orderBy('rating DESC')
+            ->orderBy(['rating'=>SORT_DESC])
             ->all();
         return $this->render('topRated', [
             'models' => $models,
@@ -78,5 +80,5 @@ class TopRated extends Widget
             'titleField' => $this->titleField,
             'path' => $this->path,
         ]);
-     }
+    }
 }

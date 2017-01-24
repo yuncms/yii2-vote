@@ -1,24 +1,12 @@
 # Extended description for yii2-vote
 
-## Migration from 2.* to 3.0
-
-If you using `RatingBehavior` in models, after update you must drop `rating` and `aggregate_rating` columns in table:
-
-```sql
-ALTER TABLE `YOUR_TARGET_TABLE_NAME` 
-	DROP `rating`, 
-	DROP `aggregate_rating`;
-```
-
-and delete corresponding properties from model.
-
 ## Manually add behavior in models
 
 Behavior to models autoincluded by bootstrap in main app configuration:
 
 ```php
 'bootstrap' => [
-    'chiliec\vote\components\VoteBootstrap',
+    'yuncms\vote\components\VoteBootstrap',
 ],
 ```
 
@@ -28,22 +16,22 @@ If it doesn't suit you, you can add behavior in model manually:
     public function behaviors() {
         return [
             'rating' => [
-                'class' => \chiliec\vote\behaviors\RatingBehavior::className(),
+                'class' => 'yuncms\vote\behaviors\RatingBehavior',
             ],
         ];
     }
 ```
 
-but in this case you also need to update rating in after find model event:
+但是在这种情况下，您还需要在查找模型事件后更新评级:
 
 ```php
-use chiliec\vote\models\Rating;
+use yuncms\vote\models\Rating;
 
 public function afterFind() {
 	parent::afterFind();
-	$modelId = Rating::getModelIdByName($this->className());
-	$targetId = $this->{$this->primaryKey()[0]};
-	Rating::updateRating($modelId, $targetId);
+	$model = Rating::getNameByModel($this->className());
+	$modelId = $this->{$this->primaryKey()[0]};
+	Rating::updateRating($model, $modelId);
 }
 ```
 
@@ -62,7 +50,7 @@ $dataProvider->sort->attributes[] = [
 Your search model class may look like this:
 
 ```php
-use chiliec\vote\models\AggregateRating;
+use yuncms\vote\models\AggregateRating;
 
 /**
  * MySuperModelSearch represents the model behind the search form about `common\models\MySuperModelSearch`.
@@ -112,14 +100,14 @@ If you want to override views of widgets, you can rewrite path to your own path 
     'view' => [
         'theme' => [
             'pathMap' => [
-                '@chiliec/vote/widgets/views' => '@app/views/vote'
+                '@yuncms/vote/widgets/views' => '@app/views/vote'
             ],
         ],
     ],
 ],
 ```
 
-After that, copy files from `/vendor/chiliec/yii2-vote/widgets/views/` to `views/vote/` and edit it how you want.
+After that, copy files from `/vendor/yuncms/yii2-vote/widgets/views/` to `views/vote/` and edit it how you want.
 
 ## Customizing JS-events
 
@@ -134,7 +122,7 @@ If you want to customize JS-events, you can rewrite widget properties:
 For example, if you want to use [noty jQuery plugin](https://github.com/needim/noty) for show notifications, you may rewrite `jsShowMessage`:
 
 ```php
-<?php echo \chiliec\vote\widgets\Vote::widget([
+<?php echo \yuncms\vote\widgets\Vote::widget([
     'model' => $model,
 	'jsShowMessage' => "
 		message = data.content;
@@ -160,14 +148,14 @@ We already marking up aggregate rating information in `Vote widget` with `Schema
 
 ```php
 <span itemscope itemtype="http://schema.org/CreativeWork">
-    <?= \chiliec\vote\widgets\Vote::widget(['model' => $model]); ?>
+    <?= \yuncms\vote\widgets\Vote::widget(['model' => $model]); ?>
 </span>
 ```
 or
 ```php
 <span itemscope itemtype="http://schema.org/Product">
 	<span itemprop="name"><?= $model->title; ?></span>
-    <?= \chiliec\vote\widgets\Vote::widget(['model' => $model]); ?>
+    <?= \yuncms\vote\widgets\Vote::widget(['model' => $model]); ?>
 </span>
 ```
 
