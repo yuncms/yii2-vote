@@ -5,7 +5,7 @@ return [
     'basePath' => \Yii::getAlias('@tests'),
     'runtimePath' => \Yii::getAlias('@tests/_output'),
     'bootstrap' => [
-        'chiliec\vote\components\VoteBootstrap',
+        'yuncms\vote\components\VoteBootstrap',
     ],
     'components' => [
         'db' => [
@@ -20,7 +20,7 @@ return [
     ],
     'modules' => [
         'vote' => [
-            'class' => 'chiliec\vote\Module',
+            'class' => 'yuncms\vote\Module',
             'allowGuests' => true,
             'allowChangeVote' => true,
             'models' => [

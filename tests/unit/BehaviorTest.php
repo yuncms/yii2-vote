@@ -1,7 +1,7 @@
 <?php
 
 use yii\console\controllers;
-use chiliec\vote\models\Rating;
+use yuncms\vote\models\Rating;
 
 class BehaviorTest extends \yii\codeception\TestCase
 {

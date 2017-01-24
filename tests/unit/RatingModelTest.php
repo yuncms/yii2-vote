@@ -1,5 +1,5 @@
 <?php
-use chiliec\vote\models\Rating;
+use yuncms\vote\models\Rating;
 
 class RatingModelTest extends \yii\codeception\TestCase
 {
