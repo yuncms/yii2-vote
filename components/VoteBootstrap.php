@@ -5,13 +5,13 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace chiliec\vote\components;
+namespace yuncms\vote\components;
 
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
-use chiliec\vote\behaviors\RatingBehavior;
-use chiliec\vote\models\Rating;
+use yuncms\vote\behaviors\RatingBehavior;
+use yuncms\vote\models\Rating;
  
 class VoteBootstrap implements BootstrapInterface
 {
