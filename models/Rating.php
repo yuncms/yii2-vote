@@ -8,17 +8,16 @@
 namespace yuncms\vote\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\base\InvalidParamException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yuncms\vote\models\AggregateRating;
 
 /**
- * This is the model class for table "{{%rating}}".
+ * This is the model class for table "{{%vote_rating}}".
  *
  * @property integer $id
+ * @property integer $model
  * @property integer $model_id
- * @property integer $target_id
  * @property integer $user_id
  * @property string $user_ip
  * @property integer $value
@@ -54,8 +53,8 @@ class Rating extends ActiveRecord
     public function rules()
     {
         return [
-            [['model_id', 'target_id', 'user_ip', 'value'], 'required'],
-            [['model_id', 'target_id', 'user_id', 'value'], 'integer'],
+            [['model', 'model_id', 'user_ip', 'value'], 'required'],
+            [['model_id', 'user_id', 'value'], 'integer'],
             [['user_ip'], 'string', 'max' => 39]
         ];
     }
@@ -67,8 +66,8 @@ class Rating extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'model_id' => 'Model ID',
-            'target_id' => 'Target ID',
+            'model' => 'Model ID',
+            'model_id' => 'Target ID',
             'user_id' => 'User ID',
             'user_ip' => 'User IP',
             'value' => 'Value',
@@ -81,26 +80,22 @@ class Rating extends ActiveRecord
      */
     public function afterSave($insert, $changedAttributes)
     {
-        static::updateRating($this->attributes['model_id'], $this->attributes['target_id']);
+        static::updateRating($this->attributes['model'], $this->attributes['model_id']);
         parent::afterSave($insert, $changedAttributes);
     }
 
     /**
-     * @param string $modelName Name of model
+     *
+     * @param string $model Name of model
      * @return integer|false Id corresponding model or false if matches not found
      */
-    public static function getModelIdByName($modelName)
+    public static function getNameByModel($model)
     {
         if (null !== $models = Yii::$app->getModule('vote')->models) {
-            $modelId = array_search($modelName, $models);
-            if (is_int($modelId)) {
-                return $modelId;
-            }
             foreach ($models as $key => $value) {
-                if (!is_array($value)) {
-                    continue;
-                }
-                if ($value['modelName'] === $modelName) {
+                if (is_string($value) && $value == $model) {
+                    return $key;
+                } else if ((is_array($value) && isset($value['model'])) && $value['model'] == $model) {
                     return $key;
                 }
             }
@@ -127,96 +122,62 @@ class Rating extends ActiveRecord
     }
 
     /**
-     * @param integer $modelId Id of model
+     * 是否允许游客投票
+     * @param string $model Id of model
      * @return boolean Checks exists permission for guest voting in model params or return global value
      */
-    public static function getIsAllowGuests($modelId)
+    public static function getIsAllowGuests($model)
     {
         $models = Yii::$app->getModule('vote')->models;
-        if (isset($models[$modelId]['allowGuests'])) {
-            return $models[$modelId]['allowGuests'];
+        if (isset($models[$model]['allowGuests'])) {
+            return $models[$model]['allowGuests'];
         }
         return Yii::$app->getModule('vote')->allowGuests;
     }
 
     /**
+     * 是否允许更改投票
      * @param string $modelId Id of model
      * @return boolean Checks exists permission for change vote in model params or return global value
      */
-    public static function getIsAllowChangeVote($modelId)
+    public static function getIsAllowChangeVote($model)
     {
         $models = Yii::$app->getModule('vote')->models;
-        if (isset($models[$modelId]['allowChangeVote'])) {
-            return $models[$modelId]['allowChangeVote'];
+        if (isset($models[$model]['allowChangeVote'])) {
+            return $models[$model]['allowChangeVote'];
         }
         return Yii::$app->getModule('vote')->allowChangeVote;
     }
 
     /**
-     * @param string $modelId Id of model
-     * @param integer $targetId Current value of primary key
+     * @param string $model Id of model
+     * @param integer $modelId Current value of primary key
      */
-    public static function updateRating($modelId, $targetId)
+    public static function updateRating($model, $modelId)
     {
-        $likes = static::find()->where(['model_id' => $modelId, 'target_id' => $targetId, 'value' => self::VOTE_LIKE])->count();
-        $dislikes = static::find()->where(['model_id' => $modelId, 'target_id' => $targetId, 'value' => self::VOTE_DISLIKE])->count();
+        $likes = static::find()->where(['model' => $model, 'model_id' => $modelId, 'value' => self::VOTE_LIKE])->count();
+        $dislikes = static::find()->where(['model' => $model, 'model_id' => $modelId, 'value' => self::VOTE_DISLIKE])->count();
         if ($likes + $dislikes !== 0) {
             // Рейтинг = Нижняя граница доверительного интервала Вильсона (Wilson) для параметра Бернулли
             // http://habrahabr.ru/company/darudar/blog/143188/
-            $rating = (($likes + 1.9208) / ($likes + $dislikes) - 1.96 * SQRT(($likes * $dislikes)
+            $rating = (($likes + 1.9208) / ($likes + $dislikes) - 1.96 * sqrt(($likes * $dislikes)
                         / ($likes + $dislikes) + 0.9604) / ($likes + $dislikes)) / (1 + 3.8416 / ($likes + $dislikes));
         } else {
             $rating = 0;
         }
         $rating = round($rating * 10, 2);
         $aggregateModel = AggregateRating::findOne([
+            'model' => $model,
             'model_id' => $modelId,
-            'target_id' => $targetId,
         ]);
         if (null === $aggregateModel) {
             $aggregateModel = new AggregateRating;
+            $aggregateModel->model = $model;
             $aggregateModel->model_id = $modelId;
-            $aggregateModel->target_id = $targetId;
         }
         $aggregateModel->likes = $likes;
         $aggregateModel->dislikes = $dislikes;
         $aggregateModel->rating = $rating;
         $aggregateModel->save();
     }
-
-    /**
-     * Converts a printable IP into an unpacked binary string
-     *
-     * @author Mike Mackintosh - mike@bakeryphp.com
-     * @link http://www.highonphp.com/5-tips-for-working-with-ipv6-in-php
-     * @param string $ip
-     * @return string $bin
-     */
-    public static function compressIp($ip)
-    {
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return current(unpack('A4', inet_pton($ip)));
-        }
-        elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return current(unpack('A16', inet_pton($ip)));
-        }
-        return false;
-    }
-
-    /**
-     * Converts an unpacked binary string into a printable IP
-     *
-     * @author Mike Mackintosh - mike@bakeryphp.com
-     * @link http://www.highonphp.com/5-tips-for-working-with-ipv6-in-php
-     * @param string $str
-     * @return string $ip
-     */
-    public static function expandIp($str) 
-    {
-        if (strlen($str) == 16 OR strlen($str) == 4) {
-            return inet_ntop(pack("A".strlen($str), $str));
-        }
-        return false;
-    }
-
 }

@@ -42,6 +42,10 @@ class Module extends \yii\base\Module
      */
     public $models;
 
+
+    /**
+     * @throws InvalidConfigException
+     */
     public function init()
     {
         parent::init();

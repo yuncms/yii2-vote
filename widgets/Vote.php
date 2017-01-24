@@ -56,7 +56,7 @@ class Vote extends Widget
      * @var string
      */
     public $jsPopOverErrorVote = "
-        $('#vote-' + model + '-' + target).popover({
+        jQuery('#vote-' + model + '-' + modelId).popover({
             content: function() {
                return errorThrown;
             }
@@ -67,14 +67,14 @@ class Vote extends Widget
      * @var string
      */
     public $jsErrorVote = "
-        jQuery('#vote-response-' + model + '-' + target).html(errorThrown);
+        jQuery('#vote-response-' + model + '-' + modelId).html(errorThrown);
     ";
 
     /**
      * @var string
      */
     public $jsPopOverShowMessage = "
-        $('#vote-' + model + '-' + target).popover({
+        jQuery('#vote-' + model + '-' + modelId).popover({
             html : true,
             trigger: 'manual',
             content: function() {
@@ -87,7 +87,7 @@ class Vote extends Widget
      * @var string
      */
     public $jsShowMessage = "
-        jQuery('#vote-response-' + model + '-' + target).html(data.content);
+        jQuery('#vote-response-' + model + '-' + modelId).html(data.content);
     ";
 
     /**
@@ -95,8 +95,8 @@ class Vote extends Widget
      */
     public $jsChangeCounters = <<<JS
         if (typeof(data.success) !== 'undefined') {
-            var idUp = '#vote-up-' + model + '-' + target;
-            var idDown = '#vote-down-' + model + '-' + target;
+            var idUp = '#vote-up-' + model + '-' + modelId;
+            var idDown = '#vote-down-' + model + '-' + modelId;
             if (act === 'like') {
                 jQuery(idUp).text(parseInt(jQuery(idUp).text()) + 1);
             } else {
@@ -116,19 +116,19 @@ JS;
      * @var string
      */
     public $jsPopOver = <<<JS
-        $('body').on('click', function (e) {
-            $('[data-toggle="popover"]').each(function () {
-                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-                    $(this).popover('hide');
+        jQuery('body').on('click', function (e) {
+            jQuery('[data-toggle="popover"]').each(function () {
+                if (!jQuery(this).is(e.target) && $(this).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
+                    jQuery(this).popover('hide');
                 }
             });
         });
 
         var timer;
-        $('[data-toggle="popover"]').click(function (e) {
+        jQuery('[data-toggle="popover"]').click(function (e) {
             clearTimeout(timer);
             timer = setTimeout(function () {
-                    $('#'+e.currentTarget.id).popover('hide');
+                    jQuery('#'+e.currentTarget.id).popover('hide');
             }, 3000);
         });
 JS;
@@ -137,7 +137,7 @@ JS;
     {
         parent::init();
         if (!isset($this->model)) {
-            throw new InvalidParamException(Yii::t('vote', 'Model not configurated'));
+            throw new InvalidParamException(Yii::t('vote', 'Model not configure'));
         }
 
         if (!isset($this->voteUrl)) {
@@ -154,10 +154,10 @@ JS;
         }
 
         $js = new JsExpression("
-            function vote(model, target, act) {
+            function vote(model, modelId, act) {
                 jQuery.ajax({ 
                     url: '$this->voteUrl', type: 'POST', dataType: 'json', cache: false,
-                    data: { modelId: model, targetId: target, act: act },
+                    data: { model: model, modelId: modelId, act: act },
                     beforeSend: function(jqXHR, settings) { $this->jsBeforeVote },
                     success: function(result, textStatus, jqXHR) { 
                         data = result;
@@ -179,8 +179,8 @@ JS;
     public function run()
     {
         return $this->render('vote', [
-            'modelId' => Rating::getModelIdByName($this->model->className()),
-            'targetId' => $this->model->{$this->model->primaryKey()[0]},
+            'model'=> Rating::getNameByModel($this->model->className()),
+            'modelId' => $this->model->{$this->model->primaryKey()[0]},
             'likes' => isset($this->model->aggregate->likes) ? $this->model->aggregate->likes : 0,
             'dislikes' => isset($this->model->aggregate->dislikes) ? $this->model->aggregate->dislikes : 0,
             'rating' => isset($this->model->aggregate->rating) ? $this->model->aggregate->rating : 0.0,

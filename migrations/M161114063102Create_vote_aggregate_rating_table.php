@@ -15,13 +15,13 @@ class M161114063102Create_vote_aggregate_rating_table extends Migration
 
         $this->createTable('{{%vote_aggregate_rating}}', [
             'id' => $this->primaryKey(),
-            'model_type' => $this->string(100)->notNull(),
+            'model' => $this->string(100)->notNull(),
             'model_id' => $this->integer()->notNull(),
             'likes' => $this->integer()->notNull(),
             'dislikes' => $this->integer()->notNull(),
             'rating' => $this->decimal(3,2)->unsigned()->notNull()
         ], $tableOptions);
-        $this->createIndex('aggregate_model_type_model_id', '{{%vote_aggregate_rating}}', ['model_type','model_id'], true);
+        $this->createIndex('aggregate_model_model_id', '{{%vote_aggregate_rating}}', ['model','model_id'], true);
     }
 
     public function down()

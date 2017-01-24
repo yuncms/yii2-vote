@@ -15,7 +15,7 @@ class M161114063039Create_voew_rating_table extends Migration
 
         $this->createTable('{{%vote_rating}}', [
             'id' => $this->primaryKey(),
-            'model_type' => $this->string(100)->notNull(),
+            'model' => $this->string(100)->notNull(),
             'model_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->defaultValue(null),
             'user_ip'=>$this->string()->notNull(),
@@ -23,7 +23,7 @@ class M161114063039Create_voew_rating_table extends Migration
             'date' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('rating_model_type_model_id', '{{%vote_rating}}', ['model_type','model_id'], false);
+        $this->createIndex('rating_model_model_id', '{{%vote_rating}}', ['model','model_id'], false);
         $this->createIndex('rating_user_id', '{{%vote_rating}}', 'user_id', false);
         $this->createIndex('rating_user_ip', '{{%vote_rating}}', 'user_ip', false);
     }

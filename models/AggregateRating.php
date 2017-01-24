@@ -8,9 +8,10 @@
 namespace yuncms\vote\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "{{%aggregate_rating}}".
+ * This is the model class for table "{{%vote_aggregate_rating}}".
  *
  * @property integer $id
  * @property integer $model_id
@@ -19,7 +20,7 @@ use Yii;
  * @property integer $dislikes
  * @property double $rating
  */
-class AggregateRating extends \yii\db\ActiveRecord
+class AggregateRating extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,8 +36,8 @@ class AggregateRating extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['model_id', 'target_id', 'likes', 'dislikes', 'rating'], 'required'],
-            [['model_id', 'target_id', 'likes', 'dislikes'], 'integer'],
+            [['model', 'model_id', 'likes', 'dislikes', 'rating'], 'required'],
+            [['model', 'model_id', 'likes', 'dislikes'], 'integer'],
             [['rating'], 'number']
         ];
     }
@@ -48,8 +49,8 @@ class AggregateRating extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('vote', 'ID'),
+            'model' => Yii::t('vote', 'Model'),
             'model_id' => Yii::t('vote', 'Model ID'),
-            'target_id' => Yii::t('vote', 'Target ID'),
             'likes' => Yii::t('vote', 'Likes'),
             'dislikes' => Yii::t('vote', 'Dislikes'),
             'rating' => Yii::t('vote', 'Rating'),

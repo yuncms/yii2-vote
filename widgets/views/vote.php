@@ -1,8 +1,7 @@
-<div class="text-center" id="vote-<?=$modelId?>-<?=$targetId?>" data-placement="top" data-container="body" data-toggle="popover">
-    <span id="vote-up-<?=$modelId?>-<?=$targetId?>" class="glyphicon glyphicon-thumbs-up" onclick="vote(<?=$modelId?>, <?=$targetId?>, 'like'); return false;" style="cursor: pointer;"><?=$likes?></span>
-    &nbsp;
-    <span id="vote-down-<?=$modelId?>-<?=$targetId?>" class="glyphicon glyphicon-thumbs-down" onclick="vote(<?=$modelId?>, <?=$targetId?>, 'dislike'); return false;" style="cursor: pointer;"><?=$dislikes?></span>
-    <div id="vote-response-<?=$modelId?>-<?=$targetId?>">
+<div class="text-center" id="vote-<?=$model?>-<?=$modelId?>" data-placement="top" data-container="body" data-toggle="popover">
+    <span id="vote-up-<?=$model?>-<?=$modelId?>" class="glyphicon glyphicon-thumbs-up" onclick="vote('<?=$model?>', <?=$modelId?>, 'like'); return false;" style="cursor: pointer;"><?=$likes?></span>
+    <span id="vote-down-<?=$model?>-<?=$modelId?>" class="glyphicon glyphicon-thumbs-down" onclick="vote('<?=$model?>', <?=$modelId?>, 'dislike'); return false;" style="cursor: pointer;"><?=$dislikes?></span>
+    <div id="vote-response-<?=$model?>-<?=$modelId?>">
         <?php if ($showAggregateRating) { ?>
             <?=Yii::t('vote', 'Aggregate rating')?>: <?=$rating?>
         <?php } ?>

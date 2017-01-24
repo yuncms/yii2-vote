@@ -13,13 +13,13 @@ Next steps will guide you through the process of installing yii2-vote using **co
 Run command
 
 ```
-php composer.phar require --prefer-dist chiliec/yii2-vote "^4.0"
+php composer.phar require --prefer-dist yuncms/yii2-vote "~1.0.0"
 ```
 
 or add
 
 ```
-"chiliec/yii2-vote": "^4.0"
+"yuncms/yii2-vote": "~1.0.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -31,11 +31,11 @@ Add following lines to your main configuration file:
 
 ```php
 'bootstrap' => [
-    'chiliec\vote\components\VoteBootstrap',
+    'yuncms\vote\components\VoteBootstrap',
 ],
 'modules' => [
     'vote' => [
-        'class' => 'chiliec\vote\Module',
+        'class' => 'yuncms\vote\Module',
         // show messages in popover
         'popOverEnabled' => true,
         // global values for all models
@@ -60,7 +60,7 @@ Add following lines to your main configuration file:
 And add widget in view:
 
 ```php
-<?php echo \chiliec\vote\widgets\Vote::widget([
+<?php echo \yuncms\vote\widgets\Vote::widget([
     'model' => $model,
     // optional fields
     // 'showAggregateRating' => true,
@@ -70,7 +70,7 @@ And add widget in view:
 Also you can add widget for display top rated models:
 
 ```php
-<?php echo \chiliec\vote\widgets\TopRated::widget([
+<?php echo \yuncms\vote\widgets\TopRated::widget([
     'modelName' => \common\models\Post::className(),
     'title' => 'Top rated models',
     'path' => 'site/view',
@@ -84,7 +84,7 @@ Also you can add widget for display top rated models:
 After you downloaded and configured Yii2-vote, the last thing you need to do is updating your database schema by applying the migrations:
 
 ```bash
-$ php yii migrate/up --migrationPath=@vendor/chiliec/yii2-vote/migrations
+$ php yii migrate/up --migrationPath=@vendor/yuncms/yii2-vote/migrations
 ```
 
 ## Documentation

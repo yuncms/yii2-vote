@@ -7,6 +7,7 @@
 
 namespace yuncms\vote\behaviors;
 
+use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -38,10 +39,10 @@ class RatingBehavior extends Behavior
     {
         return $this->owner
             ->hasOne(AggregateRating::className(), [
-                'target_id' => $this->owner->primaryKey()[0],
+                'model_id' => $this->owner->primaryKey()[0],
             ])
             ->onCondition([
-                'model_id' => Rating::getModelIdByName($this->owner->className())
+                'model' => Rating::getNameByModel($this->owner->className())
             ]);
     }
 }
