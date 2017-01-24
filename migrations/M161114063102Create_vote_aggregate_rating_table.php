@@ -21,7 +21,7 @@ class M161114063102Create_vote_aggregate_rating_table extends Migration
             'dislikes' => $this->integer()->notNull(),
             'rating' => $this->double(3,2)->unsigned()->notNull()
         ], $tableOptions);
-        $this->createIndex('aggregate_model_id_target_id', '{{%vote_aggregate_rating}}', ['source_type','source_id'], true);
+        $this->createIndex('aggregate_source_type_source_id', '{{%vote_aggregate_rating}}', ['source_type','source_id'], true);
     }
 
     public function down()

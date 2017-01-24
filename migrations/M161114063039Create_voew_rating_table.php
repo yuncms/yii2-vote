@@ -23,7 +23,7 @@ class M161114063039Create_voew_rating_table extends Migration
             'date' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('rating_model_id_target_id', '{{%vote_rating}}', ['source_type','source_id'], false);
+        $this->createIndex('rating_source_type_source_id', '{{%vote_rating}}', ['source_type','source_id'], false);
         $this->createIndex('rating_user_id', '{{%vote_rating}}', 'user_id', false);
         $this->createIndex('rating_user_ip', '{{%vote_rating}}', 'user_ip', false);
     }
