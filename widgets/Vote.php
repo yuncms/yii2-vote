@@ -23,7 +23,7 @@ use yuncms\vote\models\Rating;
 class Vote extends Widget
 {
     /**
-     * @var \yii\dbActiveRecord
+     * @var \yii\db\ActiveRecord
      */
     public $model;
 

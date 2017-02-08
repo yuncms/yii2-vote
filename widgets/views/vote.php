@@ -1,6 +1,6 @@
 <div class="text-center" id="vote-<?=$model?>-<?=$modelId?>" data-placement="top" data-container="body" data-toggle="popover">
-    <span id="vote-up-<?=$model?>-<?=$modelId?>" class="glyphicon glyphicon-thumbs-up" onclick="vote('<?=$model?>', <?=$modelId?>, 'like'); return false;" style="cursor: pointer;"><?=$likes?></span>
-    <span id="vote-down-<?=$model?>-<?=$modelId?>" class="glyphicon glyphicon-thumbs-down" onclick="vote('<?=$model?>', <?=$modelId?>, 'dislike'); return false;" style="cursor: pointer;"><?=$dislikes?></span>
+    <span id="vote-up-<?=$model?>-<?=$modelId?>" class="fa fa-thumbs-up" aria-hidden="true" onclick="vote('<?=$model?>', <?=$modelId?>, 'like'); return false;" style="cursor: pointer;"><?=$likes?></span>
+    <span id="vote-down-<?=$model?>-<?=$modelId?>" class="fa fa-thumbs-down" onclick="vote('<?=$model?>', <?=$modelId?>, 'dislike'); return false;" style="cursor: pointer;"><?=$dislikes?></span>
     <div id="vote-response-<?=$model?>-<?=$modelId?>">
         <?php if ($showAggregateRating) { ?>
             <?=Yii::t('vote', 'Aggregate rating')?>: <?=$rating?>
