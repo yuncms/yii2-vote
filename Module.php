@@ -16,8 +16,6 @@ use yii\base\InvalidConfigException;
  */
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'yuncms\vote\controllers';
-
     /**
      * Is allow vote for guests
      * @var bool

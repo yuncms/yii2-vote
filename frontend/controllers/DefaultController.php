@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
-namespace yuncms\vote\controllers;
+namespace yuncms\vote\frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
