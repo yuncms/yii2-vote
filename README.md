@@ -1,9 +1,16 @@
 # Vote for Yii2
 这个仓库 来自 https://github.com/Chiliec/yii2-vote
 
-[![Latest Stable Version](https://poser.pugx.org/yuncms/yii2-vote/v/stable.svg)](https://packagist.org/packages/yuncms/yii2-vote) [![Total Downloads](https://poser.pugx.org/yuncms/yii2-vote/downloads.svg)](https://packagist.org/packages/yuncms/yii2-vote) [![Build Status](https://travis-ci.org/yuncms/yii2-vote.svg?branch=master)](https://travis-ci.org/yuncms/yii2-vote) [![Test Coverage](https://codeclimate.com/github/yuncms/yii2-vote/badges/coverage.svg)](https://codeclimate.com/github/yuncms/yii2-vote/coverage) [![Code Climate](https://codeclimate.com/github/yuncms/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/yuncms/yii2-vote) [![License](https://poser.pugx.org/yuncms/yii2-vote/license.svg)](https://packagist.org/packages/yuncms/yii2-vote)
+[![Latest Stable Version](https://poser.pugx.org/yuncms/yii2-vote/v/stable.svg)](https://packagist.org/packages/yuncms/yii2-vote) 
+[![Total Downloads](https://poser.pugx.org/yuncms/yii2-vote/downloads.svg)](https://packagist.org/packages/yuncms/yii2-vote) 
+[![Build Status](https://travis-ci.org/yuncms/yii2-vote.svg?branch=master)](https://travis-ci.org/yuncms/yii2-vote) 
+[![Test Coverage](https://codeclimate.com/github/yuncms/yii2-vote/badges/coverage.svg)](https://codeclimate.com/github/yuncms/yii2-vote/coverage)
+[![Code Climate](https://codeclimate.com/github/yuncms/yii2-vote/badges/gpa.svg)](https://codeclimate.com/github/yuncms/yii2-vote) 
+[![License](https://poser.pugx.org/yuncms/yii2-vote/license.svg)](https://packagist.org/packages/yuncms/yii2-vote)
+[![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
 
 ![How yii2-vote works](https://raw.githubusercontent.com/Chiliec/yii2-vote/master/docs/showcase.gif)
+
 
 ## Installation
 
