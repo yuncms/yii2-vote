@@ -31,6 +31,20 @@
     "yiisoft/yii2-codeception": "^2.0"
   },
   "extra": {
+    "yuncms": {
+      "name": "vote",
+      "i18n": {
+        "class": "yii\\i18n\\PhpMessageSource",
+        "basePath": "@yuncms/vote/message"
+      },
+      "migrationNamespace": "@yuncms/vote/migrations",
+      "backend": {
+
+      },
+      "frontend": {
+        "class": "yuncms\\vote\\frontend\\Module"
+      }
+    },
     "branch-alias": {
       "dev-master": "2.0-dev"
     }
