@@ -35,6 +35,7 @@
       "name": "vote",
       "i18n": {
         "class": "yii\\i18n\\PhpMessageSource",
+        "sourceLanguage": "en-US",
         "basePath": "@yuncms/vote/message"
       },
       "migrationNamespace": "yuncms\\vote\\migrations",
