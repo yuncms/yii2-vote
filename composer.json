@@ -37,7 +37,7 @@
         "class": "yii\\i18n\\PhpMessageSource",
         "basePath": "@yuncms/vote/message"
       },
-      "migrationNamespace": "yuncms/vote/migrations",
+      "migrationNamespace": "yuncms\\vote\\migrations",
       "backend": {
 
       },
